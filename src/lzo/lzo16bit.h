@@ -1,16 +1,7 @@
-/* lzoutil.h -- utilitiy functions for use by applications [DEPRECATED]
+/* lzo16bit.h -- configuration for the strict 16-bit memory model
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 2011 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2010 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2009 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2008 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2007 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2006 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2005 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2004 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2003 Markus Franz Xaver Johannes Oberhumer
    Copyright (C) 2002 Markus Franz Xaver Johannes Oberhumer
    Copyright (C) 2001 Markus Franz Xaver Johannes Oberhumer
    Copyright (C) 2000 Markus Franz Xaver Johannes Oberhumer
@@ -33,7 +24,7 @@
    You should have received a copy of the GNU General Public License
    along with the LZO library; see the file COPYING.
    If not, write to the Free Software Foundation, Inc.,
-   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+   59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
    Markus F.X.J. Oberhumer
    <markus@oberhumer.com>
@@ -41,12 +32,22 @@
  */
 
 
-#ifndef __LZOUTIL_H_INCLUDED
-#define __LZOUTIL_H_INCLUDED 1
+/*
+ * NOTE:
+ *   the strict 16-bit memory model is *not* officially supported.
+ *   This file is only included for the sake of completeness.
+ */
 
-#ifndef __LZOCONF_H_INCLUDED
-#include "lzoconf.h"
+
+#ifndef __LZOCONF_H
+#  include <lzoconf.h>
 #endif
+
+#ifndef __LZO16BIT_H
+#define __LZO16BIT_H
+
+#if defined(__LZO_STRICT_16BIT)
+#if (UINT_MAX < LZO_0xffffffffL)
 
 #ifdef __cplusplus
 extern "C" {
@@ -54,23 +55,45 @@ extern "C" {
 
 
 /***********************************************************************
-// LZO-v1 deprecated macros (which were used in the old example programs)
-// DO NOT USE
+//
 ************************************************************************/
 
-#define lzo_alloc(a,b)      (malloc((a)*(b)))
-#define lzo_malloc(a)       (malloc(a))
-#define lzo_free(a)         (free(a))
+#ifndef LZO_99_UNSUPPORTED
+#define LZO_99_UNSUPPORTED
+#endif
+#ifndef LZO_999_UNSUPPORTED
+#define LZO_999_UNSUPPORTED
+#endif
 
-#define lzo_fread(f,b,s)    (fread(b,1,s,f))
-#define lzo_fwrite(f,b,s)   (fwrite(b,1,s,f))
+typedef unsigned int        lzo_uint;
+typedef int                 lzo_int;
+#define LZO_UINT_MAX        UINT_MAX
+#define LZO_INT_MAX         INT_MAX
+
+#define lzo_sizeof_dict_t   sizeof(lzo_uint)
+
+
+/***********************************************************************
+//
+************************************************************************/
+
+#if defined(__LZO_DOS16) || defined(__LZO_WIN16)
+
+#if 0
+#define __LZO_MMODEL        __far
+#else
+#define __LZO_MMODEL
+#endif
+
+#endif /* defined(__LZO_DOS16) || defined(__LZO_WIN16) */
 
 
 #ifdef __cplusplus
 } /* extern "C" */
 #endif
 
+#endif /* (UINT_MAX < LZO_0xffffffffL) */
+#endif /* defined(__LZO_STRICT_16BIT) */
+
 #endif /* already included */
 
-
-/* vim:set ts=4 et: */

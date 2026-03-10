@@ -22,7 +22,6 @@
 *.lai
 *.la
 *.a
-*.lib
 
 # Executables
 *.exe
@@ -39,6 +38,8 @@ ipch/
 *.cachefile
 *.VC.db
 *.VC.VC.opendb
+.vs
+.vs/*
 
 # User-specific files
 *.suo

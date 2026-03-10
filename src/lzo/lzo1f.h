@@ -2,15 +2,6 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 2011 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2010 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2009 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2008 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2007 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2006 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2005 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2004 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2003 Markus Franz Xaver Johannes Oberhumer
    Copyright (C) 2002 Markus Franz Xaver Johannes Oberhumer
    Copyright (C) 2001 Markus Franz Xaver Johannes Oberhumer
    Copyright (C) 2000 Markus Franz Xaver Johannes Oberhumer
@@ -33,7 +24,7 @@
    You should have received a copy of the GNU General Public License
    along with the LZO library; see the file COPYING.
    If not, write to the Free Software Foundation, Inc.,
-   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+   59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
    Markus F.X.J. Oberhumer
    <markus@oberhumer.com>
@@ -41,11 +32,11 @@
  */
 
 
-#ifndef __LZO1F_H_INCLUDED
-#define __LZO1F_H_INCLUDED 1
+#ifndef __LZO1F_H
+#define __LZO1F_H
 
-#ifndef __LZOCONF_H_INCLUDED
-#include "lzoconf.h"
+#ifndef __LZOCONF_H
+#include <lzoconf.h>
 #endif
 
 #ifdef __cplusplus
@@ -67,14 +58,14 @@ extern "C" {
 
 /* decompression */
 LZO_EXTERN(int)
-lzo1f_decompress        ( const lzo_bytep src, lzo_uint  src_len,
-                                lzo_bytep dst, lzo_uintp dst_len,
+lzo1f_decompress        ( const lzo_byte *src, lzo_uint  src_len,
+                                lzo_byte *dst, lzo_uintp dst_len,
                                 lzo_voidp wrkmem /* NOT USED */ );
 
 /* safe decompression with overrun testing */
 LZO_EXTERN(int)
-lzo1f_decompress_safe   ( const lzo_bytep src, lzo_uint  src_len,
-                                lzo_bytep dst, lzo_uintp dst_len,
+lzo1f_decompress_safe   ( const lzo_byte *src, lzo_uint  src_len,
+                                lzo_byte *dst, lzo_uintp dst_len,
                                 lzo_voidp wrkmem /* NOT USED */ );
 
 
@@ -83,8 +74,8 @@ lzo1f_decompress_safe   ( const lzo_bytep src, lzo_uint  src_len,
 ************************************************************************/
 
 LZO_EXTERN(int)
-lzo1f_1_compress        ( const lzo_bytep src, lzo_uint  src_len,
-                                lzo_bytep dst, lzo_uintp dst_len,
+lzo1f_1_compress        ( const lzo_byte *src, lzo_uint  src_len,
+                                lzo_byte *dst, lzo_uintp dst_len,
                                 lzo_voidp wrkmem );
 
 
@@ -94,10 +85,12 @@ lzo1f_1_compress        ( const lzo_bytep src, lzo_uint  src_len,
 
 #define LZO1F_999_MEM_COMPRESS  ((lzo_uint32) (5 * 16384L * sizeof(short)))
 
+#if !defined(LZO_999_UNSUPPORTED)
 LZO_EXTERN(int)
-lzo1f_999_compress      ( const lzo_bytep src, lzo_uint  src_len,
-                                lzo_bytep dst, lzo_uintp dst_len,
+lzo1f_999_compress      ( const lzo_byte *src, lzo_uint  src_len,
+                                lzo_byte *dst, lzo_uintp dst_len,
                                 lzo_voidp wrkmem );
+#endif
 
 
 
@@ -107,5 +100,3 @@ lzo1f_999_compress      ( const lzo_bytep src, lzo_uint  src_len,
 
 #endif /* already included */
 
-
-/* vim:set ts=4 et: */
